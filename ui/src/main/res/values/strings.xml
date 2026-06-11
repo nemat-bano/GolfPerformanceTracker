@@ -5,4 +5,8 @@
     <string name="average_speed">Average speed: %1$.1f mph</string>
     <string name="average_distance">Average distance: %1$.1f yards</string>
     <string name="view_details">View Details</string>
+    <string name="ball_speed">Ball speed: %1$.1f mph</string>
+    <string name="launch_angle">Launch angle: %1$.1f°</string>
+    <string name="spin_rate">Spin rate: %1$d rpm</string>
+    <string name="distance">Distance: %1$.1f yards</string>
 </resources>

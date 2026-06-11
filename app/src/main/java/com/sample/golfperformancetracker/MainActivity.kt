@@ -5,7 +5,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import com.sample.golfperformancetracker.ui.theme.GolfPerformanceTrackerTheme
-import com.sample.ui.compose.players.PlayerListScreen
+import com.sample.ui.compose.GolfNavHost
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -16,14 +16,8 @@ class MainActivity : ComponentActivity() {
         if (BuildConfig.USE_COMPOSE) {
             setContent {
                 GolfPerformanceTrackerTheme {
-                    PlayerListScreen(
-                        onPlayerClick = { playerId ->
-
-                        }
-                    )
-
+                    GolfNavHost()
                 }
-
             }
         } else {
             setContentView(R.layout.activity_main)
