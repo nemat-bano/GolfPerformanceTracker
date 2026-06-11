@@ -1,9 +1,6 @@
 package com.sample.ui.xml.players
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.switchMap
 import androidx.lifecycle.viewModelScope
 import com.sample.domain.model.Player
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -18,7 +15,7 @@ import repository.GolfRepository
 class PlayerListViewModel @Inject constructor(
     private val repository: GolfRepository
 ) : ViewModel() {
-
+    private var allPlayers: List<Player> = emptyList()
     private val _uiState = MutableStateFlow(PlayerListUiState())
     val uiState: StateFlow<PlayerListUiState> = _uiState.asStateFlow()
 
@@ -34,11 +31,11 @@ class PlayerListViewModel @Inject constructor(
             )
 
             try {
-                val players = repository.getPlayers()
+                allPlayers = repository.getPlayers()
 
                 _uiState.value = _uiState.value.copy(
                     isLoading = false,
-                    players = players
+                    players = allPlayers
                 )
             } catch (e: Exception) {
                 _uiState.value = _uiState.value.copy(
@@ -48,10 +45,27 @@ class PlayerListViewModel @Inject constructor(
             }
         }
     }
+
+    fun searchPlayers(query: String) {
+        val filteredPlayers = if (query.isBlank()) {
+            allPlayers
+        } else {
+            allPlayers.filter { player ->
+                player.name.contains(query, ignoreCase = true) ||
+                        player.club.contains(query, ignoreCase = true)
+            }
+        }
+
+        _uiState.value = _uiState.value.copy(
+            searchQuery = query,
+            players = filteredPlayers
+        )
+    }
 }
 
 data class PlayerListUiState(
     val players: List<Player> = emptyList(),
+    val searchQuery: String = "",
     val isLoading: Boolean = false,
     val error: String? = null
 )
