@@ -2,10 +2,14 @@ package com.sample.ui.xml.players
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import androidx.transition.AutoTransition
+import androidx.transition.TransitionManager
 import com.sample.domain.model.Player
+import com.sample.golfperformancetracker.ui.R
 import com.sample.golfperformancetracker.ui.databinding.ItemPlayerBinding
 
 class PlayerPagingAdapter(
@@ -41,11 +45,43 @@ class PlayerPagingAdapter(
         private val binding: ItemPlayerBinding
     ) : RecyclerView.ViewHolder(binding.root) {
 
+        private var expanded = false
+
         fun bind(player: Player) {
 
             binding.player = player
 
-            binding.root.setOnClickListener {
+            binding.playerClubTextView.text =
+                binding.root.context.getString(
+                    R.string.club,
+                    player.club
+                )
+
+            binding.playerAverageSpeedTextView.text =
+                binding.root.context.getString(
+                    R.string.average_speed,
+                    player.averageSpeed
+                )
+
+            binding.playerAverageDistanceTextView.text =
+                binding.root.context.getString(
+                    R.string.average_distance,
+                    player.averageDistance
+                )
+
+
+            binding.playerCard.setOnClickListener {
+                expanded = !expanded
+
+                TransitionManager.beginDelayedTransition(
+                    binding.playerCard,
+                    AutoTransition()
+                )
+
+                binding.detailsContainer.isVisible = expanded
+            }
+
+            binding.viewDetailsButton.setOnClickListener {
                 onPlayerClick(player)
             }
 
