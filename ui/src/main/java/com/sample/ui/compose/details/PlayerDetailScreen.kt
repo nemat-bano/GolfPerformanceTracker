@@ -58,20 +58,29 @@ fun PlayerDetailScreen(
                         text = player.name,
                         style = MaterialTheme.typography.headlineSmall
                     )
-                    Text(text = "Club: ${player.club}")
-                    Text(text = "Average speed: ${player.averageSpeed} mph")
-                    Text(text = "Average distance: ${player.averageDistance} yards")
+                    Text(text = stringResource(
+                        R.string.club,
+                        player.club
+                    ))
+                    Text(text = stringResource(
+                        R.string.average_speed,
+                        player.averageSpeed
+                    ))
+                    Text(text = stringResource(
+                        R.string.average_distance,
+                        player.averageDistance
+                    ))
 
                     Spacer(modifier = Modifier.height(24.dp))
 
                     if (state.shots.isNotEmpty()) {
                         Text(
-                            text = "Shots",
+                            text = stringResource(R.string.shots),
                             style = MaterialTheme.typography.titleLarge
                         )
                     } else {
                         Text(
-                            text = "No shots available",
+                            text = stringResource(R.string.no_shots_available),
                             style = MaterialTheme.typography.bodyMedium
                         )
                     }
