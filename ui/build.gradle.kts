@@ -37,6 +37,8 @@ android {
     }
     buildFeatures {
         compose = true
+        dataBinding = true
+        viewBinding = true
     }
 }
 
@@ -51,11 +53,13 @@ dependencies {
     implementation(libs.androidx.compose.ui.tooling.preview)
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
+    implementation(libs.androidx.paging.runtime.ktx)
     implementation(libs.hilt.android.v2562)
 
     implementation(libs.hilt.android)
     implementation(libs.androidx.hilt.navigation.compose)
-//    annotationProcessor(libs.hilt.compiler)
+    implementation(libs.androidx.navigation.fragment.ktx)
+    implementation(libs.androidx.navigation.ui.ktx)
     ksp(libs.hilt.compiler)
 
     testImplementation(libs.junit)
