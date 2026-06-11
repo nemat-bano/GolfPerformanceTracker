@@ -1,4 +1,8 @@
 <resources>
     <string name="app_bar_title">Golf Performance Tracker</string>
     <string name="search_player_or_club">Search player or club</string>
+    <string name="club">Club: %1$s</string>
+    <string name="average_speed">Average speed: %1$.1f mph</string>
+    <string name="average_distance">Average distance: %1$.1f yards</string>
+    <string name="view_details">View Details</string>
 </resources>

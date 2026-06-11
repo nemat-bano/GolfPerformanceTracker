@@ -1,41 +1,81 @@
 package com.sample.ui.compose.players
 
+import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.sample.domain.model.Player
+import com.sample.golfperformancetracker.ui.R
 
 @Composable
 fun PlayerCard(
     player: Player,
     onClick: () -> Unit
 ) {
+    var expanded by rememberSaveable {
+        mutableStateOf(false)
+    }
+
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(bottom = 12.dp)
-            .clickable { onClick() }
+            .animateContentSize()
+            .clickable {
+                expanded = !expanded
+            }
     ) {
-        Row(
-            modifier = Modifier.padding(16.dp),
-            verticalAlignment = Alignment.CenterVertically
+        Column(
+            modifier = Modifier.padding(16.dp)
         ) {
-            Column {
-                Text(
-                    text = player.name,
-                    style = MaterialTheme.typography.titleMedium
+            Text(
+                text = player.name,
+                style = MaterialTheme.typography.titleMedium
+            )
+            Text(
+                text = stringResource(
+                    R.string.club,
+                    player.club
                 )
-                Text(text = "Club: ${player.club}")
-                Text(text = "Avg speed: ${player.averageSpeed} mph")
+            )
+            Spacer(modifier = Modifier.height(4.dp))
+            if (expanded) {
+                Text(
+                    text = stringResource(
+                        R.string.average_speed,
+                        player.averageSpeed
+                    )
+                )
+                Text(
+                    text = stringResource(
+                        R.string.average_distance,
+                        player.averageDistance
+                    )
+                )
+                Spacer(modifier = Modifier.height(8.dp))
+                Button(
+                    onClick = onClick
+                ) {
+                    Text(
+                        text = stringResource(
+                            R.string.view_details
+                        )
+                    )
+                }
             }
         }
     }
