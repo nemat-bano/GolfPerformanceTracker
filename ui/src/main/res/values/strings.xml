@@ -5,10 +5,13 @@
     <string name="average_speed">Average speed: %1$.1f mph</string>
     <string name="average_distance">Average distance: %1$.1f yards</string>
     <string name="view_details">View Details</string>
+    <string name="club_used">Club Used: %1$s</string>
     <string name="ball_speed">Ball speed: %1$.1f mph</string>
     <string name="launch_angle">Launch angle: %1$.1f°</string>
     <string name="spin_rate">Spin rate: %1$d rpm</string>
     <string name="distance">Distance: %1$.1f yards</string>
     <string name="shots">Shots</string>
     <string name="no_shots_available">No shots available</string>
-</resources>
+    <string name="player_detail">Player Detail</string>
+
+    </resources>

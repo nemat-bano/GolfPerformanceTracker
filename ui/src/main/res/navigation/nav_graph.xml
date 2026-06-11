@@ -9,9 +9,22 @@
         android:id="@+id/playerListFragment"
         android:name="com.sample.ui.xml.players.PlayerListFragment"
         android:label="Players">
+        <action
+            android:id="@+id/action_playerListFragment_to_playerDetailFragment"
+            app:destination="@id/playerDetailFragment" />
 
     </fragment>
 
+    <fragment
+        android:id="@+id/playerDetailFragment"
+        android:name="com.sample.ui.xml.details.PlayerDetailFragment"
+        android:label="Player Detail">
+
+        <argument
+            android:name="playerId"
+            app:argType="string" />
+
+    </fragment>
 
 
 </navigation>

@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.Toolbar
+import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
@@ -12,6 +13,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.fragment.findNavController
 import androidx.paging.PagingData
 import com.sample.golfperformancetracker.ui.R
 import com.sample.golfperformancetracker.ui.databinding.FragmentPlayerListBinding
@@ -29,6 +31,12 @@ class PlayerListFragment : Fragment() {
     private val viewModel: PlayerListViewModel by viewModels()
 
     private val playerAdapter = PlayerPagingAdapter { player ->
+        findNavController().navigate(
+            R.id.action_playerListFragment_to_playerDetailFragment,
+            bundleOf(
+                "playerId" to player.id
+            )
+        )
 
     }
 
