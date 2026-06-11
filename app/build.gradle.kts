@@ -63,9 +63,6 @@ android {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
     }
-//    buildFeatures {
-//        compose = true
-//    }
 }
 
 dependencies {
@@ -79,7 +76,6 @@ dependencies {
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.hilt.android)
     implementation(libs.androidx.hilt.navigation.compose)
-//    annotationProcessor(libs.hilt.compiler)
     ksp(libs.hilt.compiler)
     testImplementation(libs.junit)
     androidTestImplementation(platform(libs.androidx.compose.bom))

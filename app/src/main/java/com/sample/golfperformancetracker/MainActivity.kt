@@ -4,6 +4,8 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import com.sample.golfperformancetracker.ui.theme.GolfPerformanceTrackerTheme
+import com.sample.ui.compose.players.PlayerListScreen
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -13,6 +15,14 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         if (BuildConfig.USE_COMPOSE) {
             setContent {
+                GolfPerformanceTrackerTheme {
+                    PlayerListScreen(
+                        onPlayerClick = { playerId ->
+
+                        }
+                    )
+
+                }
 
             }
         } else {

@@ -8,7 +8,8 @@ plugins {
 }
 
 android {
-    namespace = "com.sample.ui"
+    namespace = "com.sample.golfperformancetracker.ui"
+
     compileSdk {
         version = release(36) {
             minorApiLevel = 1
@@ -16,11 +17,7 @@ android {
     }
 
     defaultConfig {
-        namespace = "com.sample.golfperformancetracker.ui"
         minSdk = 24
-//        targetSdk = 36
-//        versionCode = 1
-//        versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }

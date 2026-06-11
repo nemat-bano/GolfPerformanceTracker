@@ -1,3 +1,4 @@
 <resources>
-    <string name="app_name">GolfPerformanceTracker</string>
+    <string name="app_bar_title">Golf Performance Tracker</string>
+    <string name="search_player_or_club">Search player or club</string>
 </resources>
