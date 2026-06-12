@@ -16,7 +16,8 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:title="@string/player_detail"
-            app:navigationIcon="@drawable/outline_arrow_back_24" />
+            app:navigationIcon="@drawable/outline_arrow_back_24"
+            app:navigationIconTint="?attr/colorOnSurface" />
 
         <ProgressBar
             android:id="@+id/progressBar"
