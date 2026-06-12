@@ -1,5 +1,6 @@
 package com.sample.ui.compose.details
 
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -9,12 +10,14 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Card
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -39,91 +42,122 @@ fun PlayerDetailScreen(
     Scaffold(
         topBar = {
             GolfTopBar(
-                title = player?.name ?: "Player Detail",
+                title = player?.name ?: stringResource(R.string.player_detail),
                 showBackButton = true,
                 onBackClick = onBackClick
             )
         }
     ) { innerPadding ->
 
-        LazyColumn(
+        Box(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(innerPadding)
-                .padding(16.dp)
         ) {
-            item {
-                if (player != null) {
-                    Text(
-                        text = player.name,
-                        style = MaterialTheme.typography.headlineSmall
-                    )
-                    Text(text = stringResource(
-                        R.string.club,
-                        player.club
-                    ))
-                    Text(text = stringResource(
-                        R.string.average_speed,
-                        player.averageSpeed
-                    ))
-                    Text(text = stringResource(
-                        R.string.average_distance,
-                        player.averageDistance
-                    ))
-
-                    Spacer(modifier = Modifier.height(24.dp))
-
-                    if (state.shots.isNotEmpty()) {
-                        Text(
-                            text = stringResource(R.string.shots),
-                            style = MaterialTheme.typography.titleLarge
-                        )
-                    } else {
-                        Text(
-                            text = stringResource(R.string.no_shots_available),
-                            style = MaterialTheme.typography.bodyMedium
-                        )
-                    }
-                }
-            }
-
-            items(state.shots) { shot ->
-                Card(
+            if (state.isLoading) {
+                CircularProgressIndicator(
+                    modifier = Modifier.align(Alignment.Center)
+                )
+            } else {
+                LazyColumn(
                     modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(vertical = 8.dp)
+                        .fillMaxSize()
+                        .padding(16.dp)
                 ) {
-                    Column(modifier = Modifier.padding(16.dp)) {
-                        Text( text = stringResource(
-                            R.string.club,
-                            shot.clubUsed
-                        ))
-                        Text(
-                            text = stringResource(
-                                R.string.ball_speed,
-                                shot.ballSpeed
+                    item {
+                        if (player != null) {
+                            Text(
+                                text = player.name,
+                                style = MaterialTheme.typography.headlineSmall
                             )
-                        )
-                        Text(
-                            text = stringResource(
-                                R.string.launch_angle,
-                                shot.launchAngle
-                            )
-                        )
 
-                        Text(
-                            text = stringResource(
-                                R.string.spin_rate,
-                                shot.spinRate
+                            Text(
+                                text = stringResource(
+                                    R.string.club,
+                                    player.club
+                                )
                             )
-                        )
-                        Text(
-                            text = stringResource(
-                                R.string.distance,
-                                shot.distance
-                            )
-                        )
 
+                            Text(
+                                text = stringResource(
+                                    R.string.average_speed,
+                                    player.averageSpeed
+                                )
+                            )
+
+                            Text(
+                                text = stringResource(
+                                    R.string.average_distance,
+                                    player.averageDistance
+                                )
+                            )
+
+                            Spacer(modifier = Modifier.height(24.dp))
+
+                            if (state.shots.isNotEmpty()) {
+                                Text(
+                                    text = stringResource(R.string.shots),
+                                    style = MaterialTheme.typography.titleLarge
+                                )
+                            } else {
+                                Text(
+                                    text = stringResource(R.string.no_shots_available),
+                                    style = MaterialTheme.typography.bodyMedium
+                                )
+                            }
+                        } else {
+                            Text(
+                                text = stringResource(R.string.player_not_found),
+                                style = MaterialTheme.typography.bodyMedium
+                            )
+                        }
+                    }
+
+                    items(state.shots) { shot ->
+                        Card(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(vertical = 8.dp)
+                        ) {
+                            Column(
+                                modifier = Modifier.padding(16.dp)
+                            ) {
+                                Text(
+                                    text = stringResource(
+                                        R.string.club,
+                                        shot.clubUsed
+                                    )
+                                )
+
+                                Text(
+                                    text = stringResource(
+                                        R.string.ball_speed,
+                                        shot.ballSpeed
+                                    )
+                                )
+
+                                Text(
+                                    text = stringResource(
+                                        R.string.launch_angle,
+                                        shot.launchAngle
+                                    )
+                                )
+
+                                Text(
+                                    text = stringResource(
+                                        R.string.spin_rate,
+                                        shot.spinRate
+                                    )
+                                )
+
+                                Text(
+                                    text = stringResource(
+                                        R.string.distance,
+                                        shot.distance
+                                    )
+                                )
+                            }
+                        }
                     }
                 }
             }

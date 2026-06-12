@@ -13,5 +13,5 @@
     <string name="shots">Shots</string>
     <string name="no_shots_available">No shots available</string>
     <string name="player_detail">Player Detail</string>
-
+    <string name="player_not_found">Player not found</string>
     </resources>
