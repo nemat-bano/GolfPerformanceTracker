@@ -4,7 +4,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sample.domain.model.Player
 import com.sample.domain.model.Shot
-
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -12,6 +11,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import repository.GolfRepository
 import javax.inject.Inject
+
 @HiltViewModel
 class PlayerDetailViewModel @Inject constructor(
     private val repository: GolfRepository
@@ -29,13 +29,12 @@ class PlayerDetailViewModel @Inject constructor(
 
             try {
                 val player = repository.getPlayer(playerId)
-                val shots = repository.getShots(playerId)
 
                 _uiState.value = _uiState.value.copy(
                     isLoading = false,
-                    player = player,
-                    shots = shots
+                    player = player
                 )
+                loadShots(playerId)
             } catch (e: Exception) {
                 _uiState.value = _uiState.value.copy(
                     isLoading = false,
@@ -44,11 +43,28 @@ class PlayerDetailViewModel @Inject constructor(
             }
         }
     }
+
+    private suspend fun loadShots(playerId: String) {
+        try {
+            val shots = repository.getShots(playerId)
+
+            _uiState.value = _uiState.value.copy(
+                shots = shots,
+                shotsError = null
+            )
+        } catch (e: Exception) {
+            _uiState.value = _uiState.value.copy(
+                shots = emptyList(),
+                shotsError = e.message ?: "No shots available"
+            )
+        }
+    }
 }
 
 data class PlayerDetailUiState(
     val player: Player? = null,
     val shots: List<Shot> = emptyList(),
     val isLoading: Boolean = false,
-    val error: String? = null
+    val error: String? = null,
+    val shotsError: String? = null
 )
