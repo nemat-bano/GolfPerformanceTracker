@@ -55,7 +55,9 @@ dependencies {
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.paging.runtime.ktx)
     implementation(libs.hilt.android.v2562)
-
+    implementation(libs.glide)
+    implementation(libs.compose)
+    implementation(libs.glide.v4160)
     implementation(libs.hilt.android)
     implementation(libs.androidx.hilt.navigation.compose)
     implementation(libs.androidx.navigation.fragment.ktx)

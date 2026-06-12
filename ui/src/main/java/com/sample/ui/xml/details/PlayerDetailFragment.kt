@@ -11,6 +11,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
+import com.bumptech.glide.Glide
 import com.sample.golfperformancetracker.ui.R
 import com.sample.golfperformancetracker.ui.databinding.FragmentPlayerDetailBinding
 import dagger.hilt.android.AndroidEntryPoint
@@ -78,6 +79,11 @@ class PlayerDetailFragment : Fragment() {
                     val player = state.player
 
                     if (player != null) {
+                        Glide.with(this@PlayerDetailFragment)
+                            .load(player.imageUrl)
+                            .placeholder(R.drawable.ic_person)
+                            .error(R.drawable.ic_person)
+                            .into(binding.playerImageView)
                         binding.playerNameTextView.text = player.name
 
                         binding.playerClubTextView.text =
