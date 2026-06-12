@@ -1,65 +1,72 @@
 package com.sample.ui.xml.players
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sample.domain.model.Player
 import dagger.hilt.android.lifecycle.HiltViewModel
-import jakarta.inject.Inject
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
-import repository.GolfRepository
+import repository.OfflineFirstGolfRepository
+import javax.inject.Inject
 
+@OptIn(ExperimentalCoroutinesApi::class)
 @HiltViewModel
 class PlayerListViewModel @Inject constructor(
-    private val repository: GolfRepository
+    private val repository: OfflineFirstGolfRepository
 ) : ViewModel() {
-    private var allPlayers: List<Player> = emptyList()
-    private val _uiState = MutableStateFlow(PlayerListUiState())
-    val uiState: StateFlow<PlayerListUiState> = _uiState.asStateFlow()
+    private val searchQuery = MutableStateFlow("")
+
+    val uiState: StateFlow<PlayerListUiState> =
+        combine(
+            repository.observePlayers(),
+            searchQuery
+        ) { players, query ->
+
+            val filteredPlayers = if (query.isBlank()) {
+                players
+            } else {
+                players.filter { player ->
+                    player.name.contains(query, ignoreCase = true) ||
+                            player.club.contains(query, ignoreCase = true)
+                }
+            }
+
+            PlayerListUiState(
+                players = filteredPlayers,
+                isLoading = false
+            )
+        }.stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(5000),
+            initialValue = PlayerListUiState(isLoading = true)
+        )
 
     init {
-        getPlayers()
+        syncPlayers()
     }
 
-    fun getPlayers() {
+    fun onSearchQueryChanged(query: String) {
+        searchQuery.value = query
+    }
+
+    private fun syncPlayers() {
         viewModelScope.launch {
-            _uiState.value = _uiState.value.copy(
-                isLoading = true,
-                error = null
-            )
-
             try {
-                allPlayers = repository.getPlayers()
-
-                _uiState.value = _uiState.value.copy(
-                    isLoading = false,
-                    players = allPlayers
-                )
+                repository.syncPlayers()
             } catch (e: Exception) {
-                _uiState.value = _uiState.value.copy(
-                    isLoading = false,
-                    error = e.message ?: "Something went wrong"
+                Log.w(
+                    "PlayerListViewModel",
+                    "Failed to sync players. Using cached data.",
+                    e
                 )
             }
         }
-    }
-
-    fun searchPlayers(query: String) {
-        val filteredPlayers = if (query.isBlank()) {
-            allPlayers
-        } else {
-            allPlayers.filter { player ->
-                player.name.contains(query, ignoreCase = true) ||
-                        player.club.contains(query, ignoreCase = true)
-            }
-        }
-
-        _uiState.value = _uiState.value.copy(
-            searchQuery = query,
-            players = filteredPlayers
-        )
     }
 }
 

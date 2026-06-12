@@ -61,9 +61,8 @@ class PlayerListFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.playerRecyclerView.adapter = playerAdapter
-
         binding.searchEditText.doAfterTextChanged { text ->
-            viewModel.searchPlayers(
+            viewModel.onSearchQueryChanged(
                 text?.toString().orEmpty()
             )
         }
@@ -73,6 +72,7 @@ class PlayerListFragment : Fragment() {
                 viewModel.uiState.collect { state ->
 
                     binding.progressBar.isVisible = state.isLoading
+
                     binding.errorTextView.isVisible = state.error != null
                     binding.errorTextView.text = state.error
 

@@ -2,69 +2,50 @@ package com.sample.ui.xml.details
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.sample.domain.model.Player
-import com.sample.domain.model.Shot
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.filterNotNull
+import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
-import repository.GolfRepository
+import repository.OfflineFirstGolfRepository
 import javax.inject.Inject
 
 @HiltViewModel
 class PlayerDetailViewModel @Inject constructor(
-    private val repository: GolfRepository
+    private val repository: OfflineFirstGolfRepository
 ) : ViewModel() {
+    private val _playerId = MutableStateFlow<String?>(null)
 
-    private val _uiState = MutableStateFlow(PlayerDetailUiState())
-    val uiState: StateFlow<PlayerDetailUiState> = _uiState.asStateFlow()
+    val player =
+        _playerId.filterNotNull()
+            .flatMapLatest {
+                repository.observePlayer(it)
+            }
+            .stateIn(
+                viewModelScope,
+                SharingStarted.WhileSubscribed(5000),
+                null
+            )
+
+    val shots =
+        _playerId.filterNotNull()
+            .flatMapLatest {
+                repository.observeShots(it)
+            }
+            .stateIn(
+                viewModelScope,
+                SharingStarted.WhileSubscribed(5000),
+                emptyList()
+            )
 
     fun loadPlayer(playerId: String) {
+
+        _playerId.value = playerId
+
         viewModelScope.launch {
-            _uiState.value = _uiState.value.copy(
-                isLoading = true,
-                error = null
-            )
-
-            try {
-                val player = repository.getPlayer(playerId)
-
-                _uiState.value = _uiState.value.copy(
-                    isLoading = false,
-                    player = player
-                )
-                loadShots(playerId)
-            } catch (e: Exception) {
-                _uiState.value = _uiState.value.copy(
-                    isLoading = false,
-                    error = e.message ?: "Something went wrong"
-                )
-            }
-        }
-    }
-
-    private suspend fun loadShots(playerId: String) {
-        try {
-            val shots = repository.getShots(playerId)
-
-            _uiState.value = _uiState.value.copy(
-                shots = shots,
-                shotsError = null
-            )
-        } catch (e: Exception) {
-            _uiState.value = _uiState.value.copy(
-                shots = emptyList(),
-                shotsError = e.message ?: "No shots available"
-            )
+            repository.syncPlayerDetails(playerId)
         }
     }
 }
-
-data class PlayerDetailUiState(
-    val player: Player? = null,
-    val shots: List<Shot> = emptyList(),
-    val isLoading: Boolean = false,
-    val error: String? = null,
-    val shotsError: String? = null
-)

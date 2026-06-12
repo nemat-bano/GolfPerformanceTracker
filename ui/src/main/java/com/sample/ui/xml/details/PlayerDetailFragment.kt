@@ -16,6 +16,7 @@ import com.sample.golfperformancetracker.ui.R
 import com.sample.golfperformancetracker.ui.databinding.FragmentPlayerDetailBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+
 @AndroidEntryPoint
 class PlayerDetailFragment : Fragment() {
 
@@ -39,21 +40,6 @@ class PlayerDetailFragment : Fragment() {
         return binding.root
     }
 
-    override fun onViewCreated(
-        view: View,
-        savedInstanceState: Bundle?
-    ) {
-        super.onViewCreated(view, savedInstanceState)
-
-        val playerId = requireArguments().getString("playerId").orEmpty()
-
-        setupToolbar()
-        setupRecyclerView()
-        observeUiState()
-
-        viewModel.loadPlayer(playerId)
-    }
-
     private fun setupToolbar() {
         binding.toolbar.title = getString(R.string.player_detail)
 
@@ -62,47 +48,40 @@ class PlayerDetailFragment : Fragment() {
         }
     }
 
-    private fun setupRecyclerView() {
-        binding.shotsRecyclerView.adapter = shotAdapter
-    }
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        val playerId = requireArguments().getString("playerId").orEmpty()
+        setupToolbar()
 
-    private fun observeUiState() {
+        binding.shotsRecyclerView.adapter = shotAdapter
+
+        viewModel.loadPlayer(playerId)
         viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.uiState.collect { state ->
+                launch {
+                    viewModel.player.collect { player ->
+                        if (player != null) {
+                            binding.playerNameTextView.text = player.name
+                            binding.playerClubTextView.text = getString(R.string.club, player.club)
+                            binding.playerAverageSpeedTextView.text =
+                                getString(R.string.average_speed, player.averageSpeed)
+                            binding.playerAverageDistanceTextView.text =
+                                getString(R.string.average_distance, player.averageDistance)
 
-                    binding.progressBar.isVisible = state.isLoading
-
-                    binding.errorTextView.isVisible = state.error != null
-                    binding.errorTextView.text = state.error
-
-                    val player = state.player
-
-                    if (player != null) {
-                        Glide.with(this@PlayerDetailFragment)
-                            .load(player.imageUrl)
-                            .placeholder(R.drawable.ic_person)
-                            .error(R.drawable.ic_person)
-                            .into(binding.playerImageView)
-                        binding.playerNameTextView.text = player.name
-
-                        binding.playerClubTextView.text =
-                            getString(R.string.club, player.club)
-
-                        binding.playerAverageSpeedTextView.text =
-                            getString(R.string.average_speed, player.averageSpeed)
-
-                        binding.playerAverageDistanceTextView.text =
-                            getString(R.string.average_distance, player.averageDistance)
+                            Glide.with(this@PlayerDetailFragment)
+                                .load(player.imageUrl)
+                                .placeholder(R.drawable.ic_person)
+                                .error(R.drawable.ic_person)
+                                .into(binding.playerImageView)
+                        }
                     }
+                }
 
-                    binding.noShotsTextView.isVisible =
-                        state.shots.isEmpty() && !state.isLoading
-
-                    binding.shotsTitleTextView.isVisible =
-                        state.shots.isNotEmpty()
-
-                    shotAdapter.submitList(state.shots)
+                launch {
+                    viewModel.shots.collect { shots ->
+                        binding.shotsTitleTextView.isVisible = shots.isNotEmpty()
+                        binding.noShotsTextView.isVisible = shots.isEmpty()
+                        shotAdapter.submitList(shots)
+                    }
                 }
             }
         }

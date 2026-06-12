@@ -1,5 +1,6 @@
 package com.sample.data.repo
 
+import android.util.Log
 import com.sample.data.mapper.toDomain
 import com.sample.data.mapper.toEntity
 import com.sample.data.room.dao.PlayerDao
@@ -49,20 +50,32 @@ class OfflineFirstGolfRepositoryImpl @Inject constructor(
 
     override suspend fun syncPlayerDetails(playerId: String) {
 
-        val player = api.getPlayer(playerId)
+        try {
+            val player = api.getPlayer(playerId)
 
-        val shots = api.getShots(playerId)
+            playerDao.updatePlayer(
+                player.toEntity()
+            )
+        } catch (e: Exception) {
+            Log.e(
+                "PlayerListViewModel",
+            "Player detail sync failed. Room will continue showing cached player data.")
+        }
 
-        playerDao.updatePlayer(
-            player.toEntity()
-        )
+        try {
+            val shots = api.getShots(playerId)
 
-        shotDao.deleteShotsForPlayer(playerId)
+            shotDao.deleteShotsForPlayer(playerId)
 
-        shotDao.upsertShots(
-            shots.map {
-                it.toEntity(playerId)
-            }
-        )
+            shotDao.updateShots(
+                shots.map {
+                    it.toEntity(playerId)
+                }
+            )
+        } catch (e: Exception) {
+            Log.e(
+                "PlayerListViewModel",
+                "Shots sync failed. Room will continue showing cached shots or empty list.")
+        }
     }
 }
