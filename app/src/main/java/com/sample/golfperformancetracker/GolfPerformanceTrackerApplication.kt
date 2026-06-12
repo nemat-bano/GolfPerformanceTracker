@@ -7,6 +7,7 @@ import androidx.work.WorkManager
 import com.sample.data.sync.ConnectivitySyncTrigger
 import com.sample.data.sync.SyncWorker
 import dagger.hilt.android.HiltAndroidApp
+import timber.log.Timber
 import javax.inject.Inject
 
 @HiltAndroidApp
@@ -14,8 +15,10 @@ class GolfPerformanceTrackerApplication : Application(), Configuration.Provider 
 
     @Inject
     lateinit var workerFactory: HiltWorkerFactory
+
     @Inject
     lateinit var connectivitySync: ConnectivitySyncTrigger
+
     @Inject
     lateinit var workManager: WorkManager
 
@@ -24,6 +27,10 @@ class GolfPerformanceTrackerApplication : Application(), Configuration.Provider 
 
         // Watch for connectivity changes and trigger sync automatically.
         connectivitySync.start()
+
+        if (BuildConfig.DEBUG) {
+            Timber.plant(Timber.DebugTree())
+        }
 
         // Schedule a periodic background sync (every 6 hours) so the cache
         // stays fresh even when the user isn't actively using the app.

@@ -8,6 +8,7 @@ import androidx.work.WorkerParameters
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
 import repository.OfflineFirstGolfRepository
+import timber.log.Timber
 import java.util.concurrent.TimeUnit
 
 private const val TAG = "SyncWorker"
@@ -32,17 +33,19 @@ class SyncWorker @AssistedInject constructor(
 ) : CoroutineWorker(context, workerParameters) {
 
     override suspend fun doWork(): Result {
-        Log.d(TAG, "Starting sync…")
+        Timber.d("Triggering player sync")
 
         return try {
-            //Pull the latest server state into the local cache.
             repository.syncPlayers()
 
-            Log.d(TAG, "Sync complete")
+            Timber.d("Sync complete")
             Result.success()
         } catch (e: Exception) {
-            Log.e(TAG, "Sync failed", e)
-            // Retry later if there are remaining attempts.
+            Timber.e(
+                e,
+                "Sync failed"
+            )
+
             if (runAttemptCount < MAX_RETRIES) Result.retry() else Result.failure()
         }
     }

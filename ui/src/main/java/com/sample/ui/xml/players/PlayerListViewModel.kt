@@ -1,6 +1,5 @@
 package com.sample.ui.xml.players
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sample.domain.model.Player
@@ -13,6 +12,7 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import repository.OfflineFirstGolfRepository
+import timber.log.Timber
 import javax.inject.Inject
 
 @OptIn(ExperimentalCoroutinesApi::class)
@@ -60,10 +60,9 @@ class PlayerListViewModel @Inject constructor(
             try {
                 repository.syncPlayers()
             } catch (e: Exception) {
-                Log.w(
-                    "PlayerListViewModel",
-                    "Failed to sync players. Using cached data.",
-                    e
+                Timber.e(
+                    e,
+                    "Failed to sync players. Using cached data."
                 )
             }
         }
