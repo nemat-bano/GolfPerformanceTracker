@@ -1,13 +1,17 @@
 package com.sample.data.repo
 
 import android.util.Log
+import androidx.paging.LOG_TAG
 import com.sample.data.mapper.toDomain
 import com.sample.data.mapper.toEntity
+import com.sample.data.room.AppDatabase
 import com.sample.data.room.dao.PlayerDao
 import com.sample.data.room.dao.ShotDao
 import com.sample.data.service.GolfService
 import com.sample.domain.model.Player
 import com.sample.domain.model.Shot
+import androidx.room.withTransaction
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import repository.OfflineFirstGolfRepository
@@ -16,6 +20,7 @@ import javax.inject.Singleton
 
 @Singleton
 class OfflineFirstGolfRepositoryImpl @Inject constructor(
+    private val database: AppDatabase,
     private val api: GolfService,
     private val playerDao: PlayerDao,
     private val shotDao: ShotDao
@@ -43,9 +48,14 @@ class OfflineFirstGolfRepositoryImpl @Inject constructor(
     override suspend fun syncPlayers() {
         val remotePlayers = api.getPlayers()
 
-        playerDao.updatePlayers(
-            remotePlayers.map { it.toEntity() }
-        )
+        database.withTransaction {
+            playerDao.clearPlayers()
+            playerDao.upsertPlayer(
+                remotePlayers.map { it.toEntity() }
+            )
+        }
+
+        Log.d("size", ""+remotePlayers.size)
     }
 
     override suspend fun syncPlayerDetails(playerId: String) {

@@ -23,7 +23,10 @@ interface PlayerDao {
     fun observePlayer(id: String): Flow<PlayerEntity?>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun updatePlayers(players: List<PlayerEntity>)
+    suspend fun upsertPlayer(players: List<PlayerEntity>)
+
+    @Query("DELETE FROM players")
+    suspend fun clearPlayers()
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun updatePlayer(player: PlayerEntity)
