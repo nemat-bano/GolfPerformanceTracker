@@ -1,4 +1,4 @@
-package com.sample.data.remote
+package com.sample.data.repo
 
 import com.sample.data.service.GolfService
 import com.sample.data.dto.PlayerDto

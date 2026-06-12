@@ -1,4 +1,4 @@
-package com.sample.data
+package com.sample.data.repo
 
 import com.sample.domain.model.Player
 import com.sample.domain.model.Shot
