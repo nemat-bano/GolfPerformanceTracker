@@ -39,28 +39,22 @@ The application provides two build variants that demonstrate different Android U
     Moshi
     Paging 3
   #### Architecture
-    MVVM
+    MVVM and Clean Architecture
   Things to Note
     Uses remote data directly
     No local persistence
     No offline-first implementation
   #### Paging 3 Support
     The Compose implementation uses Paging 3 to efficiently load and display large player datasets from the remote API.
-  #### Architecture:
+  ##### Architecture:
     LazyColumn -> collectAsLazyPagingItems() -> ViewModel -> Pager -> PlayerPagingSource -> Retrofit + Moshi -> MockAPI
-  #### Key Components:
+  ##### Key Components:
     * Paging 3
     * PagingSource
     * Pager
     * LazyPagingItems
     * Retrofit
-  #### Benefits:
-    * Efficient memory usage
-    * Incremental data loading
-    * Built-in loading and error states
-    * Scalable architecture for larger datasets
-
-The Compose variant uses a network-backed PagingSource and does not rely on local persistence.
+  The Compose variant uses a network-backed PagingSource and does not rely on local persistence.
 
 ### XML Variant
   Build Variants
