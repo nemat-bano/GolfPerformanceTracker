@@ -100,7 +100,7 @@ The application provides two build variants that demonstrate different Android U
       Depends on:
         domain
 
-    ### ui: Responsible for presentation and user interaction.
+  ### ui: Responsible for presentation and user interaction.
       Contains:
         Compose screens
         Compose navigation
