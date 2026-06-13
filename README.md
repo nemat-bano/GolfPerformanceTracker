@@ -4,7 +4,7 @@ Golf Performance Tracker is an Android application that allows users to browse g
 
 The project demonstrates modern Android development practices through two separate UI implementations:
 
-XML Variant – Traditional Android UI built with Fragments, RecyclerView, Data Binding, and MotionLayout
+XML Variant – Traditional Android UI built with Fragments, RecyclerView, Data Binding, Custom View and MotionLayout
 Compose Variant – Modern Android UI built with Jetpack Compose
 
 The application showcases Kotlin (Coroutines + Flow), MVVM, Clean Architecture, modularisation, dependency injection(Hilt), networking(Retrofit), data parsing(Moshi) local persistence(Room), offline-first architecture, background synchronisation, logging(Timber), and testing(Turbine, unit tesing using mockk).
@@ -227,7 +227,7 @@ The application provides two build variants that demonstrate different Android U
 
 ## Future Improvements
     Paging 3 support
-    Analytics dashboard
+  
 
 
    
