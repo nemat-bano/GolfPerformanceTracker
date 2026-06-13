@@ -19,6 +19,7 @@ The application showcases Kotlin (Coroutines + Flow), MVVM, Clean Architecture, 
   View player image
   View average speed and distance
   View shot history
+  UI supports dark and light themes
 
 ## Build Variants
 
