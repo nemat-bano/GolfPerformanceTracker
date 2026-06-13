@@ -47,21 +47,7 @@ The application provides two build variants that demonstrate different Android U
   #### Paging 3 Support
     The Compose implementation uses Paging 3 to efficiently load and display large player datasets from the remote API.
   #### Architecture:
-    ```text
-    LazyColumn
-        ↓
-    collectAsLazyPagingItems()
-        ↓
-    ViewModel
-        ↓
-    Pager
-        ↓
-    PlayerPagingSource
-        ↓
-    Retrofit + Moshi
-        ↓
-    MockAPI
-    ```
+    LazyColumn -> collectAsLazyPagingItems() -> ViewModel -> Pager -> PlayerPagingSource -> Retrofit + Moshi -> MockAPI
   #### Key Components:
     * Paging 3
     * PagingSource
