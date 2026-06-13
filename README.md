@@ -170,11 +170,11 @@ The application provides two build variants that demonstrate different Android U
 ## API Endpoints
   Data is retrieved from MockAPI.io.
   
-  Players
-    GET /Players
-  Player Details
+  ### Players  
+    GET /Players  
+  ### Player Details
     GET /Players/{id}
-  Shots
+  ### Shots
     GET /Shots?playerId={id}
 
 ## Setup Instructions
