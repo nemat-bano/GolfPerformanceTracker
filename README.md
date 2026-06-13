@@ -237,17 +237,15 @@ The Compose variant uses a network-backed PagingSource and does not rely on loca
 
 ## Testing
     The project includes:
-      Unit Tests
+  ### Unit Tests
         PlayerMapperTest
         ShotMapperTest
-      Flow Tests
+  ### Flow Tests
         Turbine-based Flow testing
 
 ## Logging
     The application uses Timber for structured logging.
 
-## Future Improvements
-    Paging 3 support
   
 
 
