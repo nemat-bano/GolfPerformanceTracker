@@ -40,10 +40,10 @@ The application provides two build variants that demonstrate different Android U
     Paging 3
   #### Architecture
     MVVM and Clean Architecture
-  Things to Note
-    Uses remote data directly
-    No local persistence
-    No offline-first implementation
+  ##### Things to Note
+    * Uses remote data directly
+    * No local persistence
+    * No offline-first implementation
   #### Paging 3 Support
     The Compose implementation uses Paging 3 to efficiently load and display large player datasets from the remote API.
   ##### Architecture:
@@ -71,10 +71,10 @@ The application provides two build variants that demonstrate different Android U
     Moshi
   #### Architecture
     MVVM with offline first approach
-  Things to Note
-    Implements offline-first architecture
-    Room acts as the single source of truth
-    Supports automatic synchronization when connectivity is restored
+  ##### Things to Note  
+    * Implements offline-first architecture
+    * Room acts as the single source of truth
+    * Supports automatic synchronization when connectivity is restored
 
 ## Modularization
   The project follows Clean Architecture and is organized into four Gradle modules.
