@@ -26,7 +26,7 @@ The application showcases Kotlin (Coroutines + Flow), MVVM, Clean Architecture, 
 The application provides two build variants that demonstrate different Android UI approaches.
 
 ### Compose Variant
-  Build Variants
+  #### Build Variants
     composeDebug
     composeRelease
   #### Technologies
