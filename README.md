@@ -57,7 +57,7 @@ The application provides two build variants that demonstrate different Android U
   The Compose variant uses a network-backed PagingSource and does not rely on local persistence.
 
 ### XML Variant
-  Build Variants
+  #### Build Variants
     xmlDebug
     xmlRelease
   #### Technologies
