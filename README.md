@@ -7,7 +7,7 @@ The project demonstrates modern Android development practices through two separa
 XML Variant – Traditional Android UI built with Fragments, RecyclerView, Data Binding, Custom View and MotionLayout
 Compose Variant – Modern Android UI built with Jetpack Compose
 
-The application showcases Kotlin (Coroutines + Flow), MVVM, Clean Architecture, modularisation, dependency injection(Hilt), networking(Retrofit), data parsing(Moshi) local persistence(Room), offline-first architecture, background synchronisation, logging(Timber), and testing(Turbine, unit tesing using mockk).
+The application showcases Kotlin (Coroutines + Flow), MVVM, Clean Architecture, modularisation, dependency injection(Hilt), networking(Retrofit), data parsing(Moshi) local persistence(Room), offline-first architecture, background synchronisation, Paging 3, logging(Timber), and testing(Turbine, unit tesing using mockk).
 
 ## Features
   Player List
@@ -37,12 +37,44 @@ The application provides two build variants that demonstrate different Android U
     StateFlow
     Retrofit
     Moshi
+    Paging 3
   #### Architecture
     MVVM
   Things to Note
     Uses remote data directly
     No local persistence
     No offline-first implementation
+  #### Paging 3 Support
+    The Compose implementation uses Paging 3 to efficiently load and display large player datasets from the remote API.
+  #### Architecture:
+    ```text
+    LazyColumn
+        ↓
+    collectAsLazyPagingItems()
+        ↓
+    ViewModel
+        ↓
+    Pager
+        ↓
+    PlayerPagingSource
+        ↓
+    Retrofit + Moshi
+        ↓
+    MockAPI
+    ```
+  #### Key Components:
+    * Paging 3
+    * PagingSource
+    * Pager
+    * LazyPagingItems
+    * Retrofit
+  #### Benefits:
+    * Efficient memory usage
+    * Incremental data loading
+    * Built-in loading and error states
+    * Scalable architecture for larger datasets
+
+The Compose variant uses a network-backed PagingSource and does not rely on local persistence.
 
 ### XML Variant
   Build Variants
@@ -102,16 +134,17 @@ The application provides two build variants that demonstrate different Android U
         domain
 
   ### ui: Responsible for presentation and user interaction.
-      Contains:
-        Compose screens
-        Compose navigation
-        Fragments
-        RecyclerView
-        Data Binding
-        MotionLayout
-        ViewModels
-        UI State
-        Navigation
+      Contains:  
+        Compose screens,  
+        Compose navigation,  
+        Fragments,  
+        RecyclerView,  
+        Data Binding,  
+        MotionLayout,  
+        ViewModels,  
+        UI State,  
+        Navigation,  
+        Pagination,  
 
       Depends on:
         domain
@@ -161,6 +194,8 @@ The application provides two build variants that demonstrate different Android U
   ### Image Loading
     Glide
     Glide Compose
+  ### Pagination
+    Paging 3 with Jetpack Compose
   ### Logging
     Timber
   ### Testing
