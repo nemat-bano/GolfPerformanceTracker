@@ -8,6 +8,12 @@ import retrofit2.http.Query
 
 interface GolfService {
     @GET("Players")
+    suspend fun getPlayers(
+        @Query("page") page: Int,
+        @Query("limit") limit: Int
+    ): List<PlayerDto>
+
+    @GET("Players")
     suspend fun getPlayers(): List<PlayerDto>
 
     @GET("Players/{id}")
