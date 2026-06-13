@@ -76,7 +76,7 @@ The Compose variant uses a network-backed PagingSource and does not rely on loca
     Retrofit
     Moshi
   #### Architecture
-    MVVM with offile first approach
+    MVVM with offline first approach
   Things to Note
     Implements offline-first architecture
     Room acts as the single source of truth
