@@ -45,6 +45,7 @@ dependencies {
     implementation(libs.androidx.hilt.common)
     implementation(libs.androidx.hilt.work)
     implementation(libs.androidx.work.runtime.ktx)
+    implementation(libs.core.ktx)
     implementation(libs.material)
     implementation(libs.hilt.android.v2562)
 
@@ -65,7 +66,16 @@ dependencies {
 
     ksp(libs.androidx.room.compiler)
 
+    androidTestImplementation(libs.androidx.junit.v121)
+    androidTestImplementation(libs.androidx.core)
+    androidTestImplementation(libs.turbine)
+    androidTestImplementation(libs.kotlinx.coroutines.test.v1102)
+
+    testImplementation(libs.turbine)
+    testImplementation(libs.kotlinx.coroutines.test)
+    testImplementation(libs.mockk)
     testImplementation(libs.junit)
+
     androidTestImplementation(libs.androidx.espresso.core)
     androidTestImplementation(libs.androidx.junit)
     implementation(project(":domain"))
