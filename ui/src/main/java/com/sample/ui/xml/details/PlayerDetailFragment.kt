@@ -66,7 +66,17 @@ class PlayerDetailFragment : Fragment() {
                                 getString(R.string.average_speed, player.averageSpeed)
                             binding.playerAverageDistanceTextView.text =
                                 getString(R.string.average_distance, player.averageDistance)
+                            binding.speedMetricView.setMetric(
+                                label = getString(R.string.average_speed_label),
+                                valueText = getString(R.string.average_speed_value, player.averageSpeed),
+                                progress = (player.averageSpeed / 200.0).toFloat()
+                            )
 
+                            binding.distanceMetricView.setMetric(
+                                label = getString(R.string.average_distance_label),
+                                valueText = getString(R.string.average_distance_value, player.averageDistance),
+                                progress = (player.averageDistance / 400.0).toFloat()
+                            )
                             Glide.with(this@PlayerDetailFragment)
                                 .load(player.imageUrl)
                                 .placeholder(R.drawable.ic_person)

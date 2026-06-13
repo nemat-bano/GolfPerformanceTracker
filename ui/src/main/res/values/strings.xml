@@ -4,6 +4,10 @@
     <string name="club">Club: %1$s</string>
     <string name="average_speed">Average speed: %1$.1f mph</string>
     <string name="average_distance">Average distance: %1$.1f yards</string>
+    <string name="average_speed_label">Average speed</string>
+    <string name="average_distance_label">Average distance</string>
+    <string name="average_speed_value">%1$.1f mph</string>
+    <string name="average_distance_value">%1$.1f yards</string>
     <string name="view_details">View Details</string>
     <string name="club_used">Club Used: %1$s</string>
     <string name="ball_speed">Ball speed: %1$.1f mph</string>
