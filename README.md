@@ -137,28 +137,33 @@ The application provides two build variants that demonstrate different Android U
   No Internet -> Cached Room Data -> Internet Restored -> WorkManager -> Repository Sync -> Room Update -> Automatic UI Refresh
 
 ## Technology Stack
-  Core
+  ### Core
     Kotlin
     Clean Architecture
     MVVM
     Modularization
     Coroutines
     Flow
-  Dependency Injection
+    RecyclerView
+    Data Binding
+    MotionLayout
+    Repository Pattern and Single Source of Truth
+    Jetpack Compose
+  ### Dependency Injection
     Hilt
-  Networking
+  ### Networking
     Retrofit
     Moshi
-  Local Storage
+  ### Local Storage
     Room Database
-  Background Processing
+  ### Background Processing
     WorkManager
-  Image Loading
+  ### Image Loading
     Glide
     Glide Compose
-  Logging
+  ### Logging
     Timber
-  Testing
+  ### Testing
     JUnit
     Turbine
   
