@@ -172,40 +172,40 @@ The application provides two build variants that demonstrate different Android U
     GET /Shots?playerId={id}
 
 ## Setup Instructions
-    Prerequisites
+  ### Prerequisites
       Android Studio Narwhal or newer
       JDK 17
       Android SDK 35
       Gradle 8+
-    Clone Repository
+  ### Clone Repository
       git clone https://github.com/nemat-bano/GolfPerformanceTracker.git
       cd GolfPerformanceTracker
-    Open Project
+  ### Open Project
       Open Android Studio
       Select Open
       Choose the project root directory
       Allow Gradle synchronization to complete
 
-    Selecting a Build Variant
-      Using Android Studio
+  ### Selecting a Build Variant
+  #### Using Android Studio
         Open Android Studio
         Navigate to:
         View → Tool Windows → Build Variants
         Select one of the following variants for the app module:
         composeDebug or xmlDebug
         Click Run
-    Using Command Line
-      Build Compose Variant
-        ./gradlew assembleComposeDebug
-      Build XML Variant
-        ./gradlew assembleXmlDebug
-      Install Compose Variant
-        ./gradlew installComposeDebug
-      Install XML Variant
-        ./gradlew installXmlDebug
-      Run Unit Tests
+  #### Using Command Line
+        Build Compose Variant
+          ./gradlew assembleComposeDebug
+        Build XML Variant
+          ./gradlew assembleXmlDebug
+        Install Compose Variant
+          ./gradlew installComposeDebug
+        Install XML Variant
+          ./gradlew installXmlDebug
+  ### Run Unit Tests
         ./gradlew test
-      Run Instrumentation Tests
+  ### Run Instrumentation Tests
         ./gradlew connectedAndroidTest
 
 ## Testing
