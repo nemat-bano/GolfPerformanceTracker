@@ -44,6 +44,7 @@ The application provides two build variants that demonstrate different Android U
     * Uses remote data directly
     * No local persistence
     * No offline-first implementation
+    * Implements pagination with Paging 3
   #### Paging 3 Support
     The Compose implementation uses Paging 3 to efficiently load and display large player datasets from the remote API.
   ##### Architecture:
