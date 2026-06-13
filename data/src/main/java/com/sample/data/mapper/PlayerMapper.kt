@@ -2,9 +2,7 @@ package com.sample.data.mapper
 
 import com.sample.data.dto.PlayerDto
 import com.sample.data.room.entities.PlayerEntity
-import com.sample.data.room.entities.ShotEntity
 import com.sample.domain.model.Player
-import com.sample.domain.model.Shot
 
 
 fun PlayerDto.toDomain(): Player {
