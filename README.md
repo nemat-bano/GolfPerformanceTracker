@@ -10,15 +10,15 @@ Compose Variant – Modern Android UI built with Jetpack Compose
 The application showcases Kotlin (Coroutines + Flow), MVVM, Clean Architecture, modularisation, dependency injection(Hilt), networking(Retrofit), data parsing(Moshi) local persistence(Room), offline-first architecture, background synchronisation, Paging 3, logging(Timber), and testing(Turbine, unit tesing using mockk).
 
 ## Features
-  Player List
-  Search players by name or club
-  Expand and collapse player cards
-  Navigate to player details
-  Player Details
-  View player profile information
-  View player image
-  View average speed and distance
-  View shot history
+  Player List,
+  Search players by name or club,
+  Expand and collapse player cards,
+  Navigate to player details,
+  Player Details,
+  View player profile information,
+  View player image,
+  View average speed and distance,
+  View shot history,
   UI supports dark and light themes
 
 ## Build Variants
